@@ -340,7 +340,7 @@
                     scope.$watch('column.subheaderTemplateUrl', function (value) {
                         if (value) {
                             http.get(value, {cache: templateCache}).success(function (response) {
-                                childScope = scope.$new();
+                                var childScope = scope.$new();
                                 element.html(response);
                                 compile(element.contents())(childScope);
                             }).error(defaultContent);
@@ -726,7 +726,7 @@ angular.module("partials/smartTable.html", []).run(["$templateCache", function($
     "        <th ng-repeat=\"column in columns\" ng-include=\"column.headerTemplateUrl\" scope=\"col\" class=\"smart-table-header-cell {{column.headerClass}}\" ng-class=\"{'sort-ascent':column.reverse==false, 'sort-descent':column.reverse==true}\"></th>\n" +
     "    </tr>\n" +
     "    <tr class=\"smart-table-subheader-row sub-header-row-{{$index}}\" ng-repeat=\"subHeaderRow in subHeaders\">\n" +
-    "        <th ng-repeat=\"column in subHeaderRow\" ng-include=\"column.subheaderTemplateUrl\" scope=\"column\" class=\"smart-table-subheader-cell  {{column.cellClass}}\" ng-class=\"{'sort-ascent':column.reverse==false, 'sort-descent':column.reverse==true}\"></th>\n" +
+    "        <th ng-repeat=\"column in subHeaderRow\" scope=\"column\" class=\"smart-table-subheader-cell  {{column.cellClass}}\" ng-class=\"{'sort-ascent':column.reverse==false, 'sort-descent':column.reverse==true}\"></th>\n" +
     "    </tr>\n" +
     "    </thead>\n" +
     "    <tbody>\n" +
