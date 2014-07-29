@@ -19,7 +19,7 @@
         cellTemplateUrl: '',
         headerClass: '',
         cellClass: '',
-        subheaderTemplateUrl:''
+        subheaderTemplateUrl: ''
     });
 
     function ColumnProvider(DefaultColumnConfiguration, templateUrlList) {
@@ -63,7 +63,7 @@
                     columnCollection: '=columns',
                     dataCollection: '=rows',
                     config: '=',
-                    subHeaders:'=subHeaders'
+                    subHeaders: '=subHeaders'
                 },
                 replace: 'true',
                 templateUrl: templateList.smartTable,
@@ -323,19 +323,20 @@
                     });
                 }
             };
-        }]).directive('smartTableSubheaderCell',['$filter','$compile','$templateCache','$http',function (filter,compile,templateCache,http) {
+        }]).directive('smartTableSubheaderCell', ['$filter', '$compile', '$templateCache', '$http', function (filter, compile, templateCache, http) {
             return {
                 restrict: 'C',
                 require: '^smartTable',
                 link: function (scope, element) {
-                    var column = scope.column;
-                    var format = filter('format');
+                    var column = scope.column,
+                        format = filter('format');
                     scope.formatedValue = format(column.label, column.formatFunction, column.formatParameter);
-                    element.html(scope.formatedValue);
-
+                    
                     function defaultContent() {
                          element.html(scope.formatedValue);
                     }
+                    
+                    defaultContent();
                     
                     scope.$watch('column.subheaderTemplateUrl', function (value) {
                         if (value) {
@@ -402,7 +403,6 @@
             scope.numberOfPages = calculateNumberOfPages(scope.dataCollection);
             scope.currentPage = 1;
             scope.holder = {isAllSelected: false};
-            scope.subHeaders = [];
             var predicate = {},
                 lastColumnSort;
 
@@ -651,18 +651,18 @@
              * setter method for subHeader scope variable
              * @param subheaderRow,passed as an attribute
              * */
-            this.setSubHeaderDataRow = function(subHeaderRows){
+            this.setSubHeaderDataRow = function(subHeaderRows) {
                 if (subHeaderRows && subHeaderRows.length) {
                     scope.subHeaders = subHeaderRows.map(function (row) {
-                        if(row.length !== scope.columns.length){
-                            scope.subHeaders=[];
+                        if (row.length !== scope.columns.length) {
+                            scope.subHeaders = [];
                             throw new RangeError('Column count mismatch for header and sub headers');
                         }
                         return row.map(function (column) {
                             return new Column(column);
-                            });
                         });
-                    }
+                    });
+                }
             };
         }]);
 })(angular);
