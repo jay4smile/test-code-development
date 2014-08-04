@@ -13,4 +13,8 @@ angular
             selectionMode: 'single'
         };
 
+		scope.$on('selectionChange', function(event, arg) {
+			console.log(arg);
+		});
+		
 }]);

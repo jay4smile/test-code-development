@@ -404,7 +404,8 @@
             scope.currentPage = 1;
             scope.holder = {isAllSelected: false};
             var predicate = {},
-                lastColumnSort;
+                lastColumnSort,
+				selectedDataRows = [];
 
             function isAllSelected() {
                 var i,
@@ -454,10 +455,28 @@
                             }
                         }
                     }
+					/*else {
+						if (select) {
+							selectedDataRows.push(array[index]);
+						}
+						else {
+							for(var i = 0, l = array.length; i < l; i++) {
+								for (var indexCounter = 0; indexCounter < selectedDataRows.length; indexCounter++) {
+									var oldValue = JSON.stringify(dataRow);
+									var newValue = JSON.stringify(selectedDataRows[indexCounter]);
+									if (oldValue === newValue) {
+										selectedDataRows.splice(indexCounter,1);
+									}
+								}
+							}
+						}
+						scope.$emit('selectionChange', {item: selectedDataRows});	
+					}*/
                     dataRow.isSelected = select;
                     scope.holder.isAllSelected = isAllSelected();
-                    scope.$emit('selectionChange', {item: dataRow});
+					scope.$emit('selectionChange', {item: dataRow});
                 }
+
             }
 
             /**
